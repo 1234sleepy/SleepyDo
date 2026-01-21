@@ -128,6 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\extensions\UIExtension.hpp" />
     <ClInclude Include="include\ui\SleepyDoUI.hpp" />
     <ClInclude Include="vendor\imguI\backends\imgui_impl_dx12.h" />
     <ClInclude Include="vendor\imguI\backends\imgui_impl_win32.h" />
@@ -140,6 +141,7 @@
     <ClInclude Include="vendor\imguI\misc\cpp\imgui_stdlib.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\extensions\UIExtension.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ui\SleepyDoUI.cpp" />
     <ClCompile Include="vendor\imguI\backends\imgui_impl_dx12.cpp" />

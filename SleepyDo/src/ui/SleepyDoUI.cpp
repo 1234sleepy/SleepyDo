@@ -1,6 +1,41 @@
 #include "../../include/ui/SleepyDoUI.hpp"
 
+SleepyDoUI::UIType SleepyDoUI::currentUI{ UIType::HOMEUI };
+std::string SleepyDoUI::phraseOfTheDay{ "Loading..." };
 
+ImVec4 SleepyDoUI::blueColor{ ImColor(164, 238, 255, 255) };
+
+
+
+void SleepyDoUI::renderHomeUI()
+{
+    ImGui::SetWindowFontScale(1.5f);
+
+    centerNextItem(ImGui::CalcTextSize(SleepyDoUI::phraseOfTheDay.c_str()).x);
+    ImGui::SetCursorPosY(60.0);
+
+    ImGui::TextColored(SleepyDoUI::blueColor, SleepyDoUI::phraseOfTheDay.c_str());
+
+    ImGui::SetWindowFontScale(1.0f);
+
+    ImVec2 toDoChildSize = ImVec2(350, 300);
+    ImGui::PushStyleColor(ImGuiCol_ChildBg, SleepyDoUI::blueColor);
+
+    centerNextItem(toDoChildSize.x);
+    ImGui::SetCursorPosY(100.0);
+    ImGui::BeginChild("ToDoChild", toDoChildSize, true, ImGuiWindowFlags_None);
+
+    ImGui::TextColored(SleepyDoUI::blueColor, "dsafdsafdassf");
+
+    ImGui::EndChild();
+    ImGui::PopStyleColor();
+
+}
+
+void SleepyDoUI::renderLoadMoreUI()
+{
+
+}
 
 void SleepyDoUI::renderAppUI()
 {
@@ -10,9 +45,21 @@ void SleepyDoUI::renderAppUI()
     ImGui::Begin("UI", nullptr, kUIWindowsFlags);
     {
         SleepyDoUI::renderHeaderUI();
+        switch (SleepyDoUI::currentUI)
+        {
+        default:
+        case SleepyDoUI::UIType::HOMEUI:
+            SleepyDoUI::renderHomeUI();
+            break;
+        case SleepyDoUI::UIType::LOADMOREUI:
+            SleepyDoUI::renderLoadMoreUI();
+            break;
+        }
+
     }
     ImGui::End();
 }
+
 
 void SleepyDoUI::renderHeaderUI()
 {
@@ -30,12 +77,14 @@ void SleepyDoUI::renderHeaderUI()
         ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
         ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.1f, 0.1f, 0.1f, 0.5f));
         ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.2f, 0.2f, 0.2f, 0.8f));
-        ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(ImColor(164, 238, 255, 255)));
+        ImGui::PushStyleColor(ImGuiCol_Text, SleepyDoUI::blueColor);
+
+        ImVec2 btnSize{ -FLT_MIN, rowHeight };
 
         ImGui::TableNextColumn();
         ImGui::SetWindowFontScale(1.3f);
         ImGui::AlignTextToFramePadding();
-        if (ImGui::Button("SleepyDo", ImVec2{ -FLT_MIN, rowHeight }))
+        if (ImGui::Button("SleepyDo", btnSize))
         {
 
         }
@@ -43,21 +92,21 @@ void SleepyDoUI::renderHeaderUI()
 
         ImGui::TableNextColumn();
         ImGui::AlignTextToFramePadding();
-        if (ImGui::Button("Data/Time", ImVec2{ -FLT_MIN, rowHeight }))
+        if (ImGui::Button("Data/Time", btnSize))
         {
 
         }
 
         ImGui::TableNextColumn();
         ImGui::AlignTextToFramePadding();
-        if (ImGui::Button("Imp", ImVec2{ -FLT_MIN, rowHeight }))
+        if (ImGui::Button("Imp", btnSize))
         {
 
         }
 
         ImGui::TableNextColumn();
         ImGui::AlignTextToFramePadding();
-        if (ImGui::Button("Exp", ImVec2{ -FLT_MIN, rowHeight }))
+        if (ImGui::Button("Exp", btnSize))
         {
 
         }
@@ -72,5 +121,4 @@ void SleepyDoUI::renderHeaderUI()
 
     ImGui::Separator();
 }
-
 

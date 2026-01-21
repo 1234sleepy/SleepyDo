@@ -1,9 +1,13 @@
 #pragma once
 
+#include "../../include/extensions/UIExtension.hpp"
+
+#include "../../vendor/imguI/imgui.h"
+
+
 #include <iostream>
 #include <filesystem>
 
-#include "../../vendor/imguI/imgui.h"
 
 
 
@@ -15,13 +19,27 @@ public:
 
 	static void renderAppUI();
 private:
+	enum class UIType
+	{
+		HOMEUI = 0,
+		LOADMOREUI = 1,
+	};
+
+	static UIType currentUI;
+
+	static ImVec4 blueColor;
+
 	static const int kUIWidth{ 400 };
 	static const int kUIHeight{ 600 };
 
 	static const int kUIPosX{ 0 };
 	static const int kUIPosY{ 0 };
 
+	static std::string phraseOfTheDay;
+
 	static void renderHeaderUI();
+	static void renderHomeUI();
+	static void renderLoadMoreUI();
 
 	static const ImGuiWindowFlags kUIWindowsFlags{ ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoTitleBar };
 };
