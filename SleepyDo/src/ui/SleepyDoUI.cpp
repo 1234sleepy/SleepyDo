@@ -4,6 +4,7 @@ SleepyDoUI::UIType SleepyDoUI::currentUI{ UIType::HOMEUI };
 std::string SleepyDoUI::phraseOfTheDay{ "Loading..." };
 
 ImVec4 SleepyDoUI::blueColor{ ImColor(164, 238, 255, 255) };
+ImVec4 SleepyDoUI::blackColor{ ImColor(0, 0, 0, 255) };
 
 
 
@@ -18,14 +19,25 @@ void SleepyDoUI::renderHomeUI()
 
     ImGui::SetWindowFontScale(1.0f);
 
-    ImVec2 toDoChildSize = ImVec2(350, 300);
+    ImVec2 toDoChildSize = ImVec2(350, 250);
     ImGui::PushStyleColor(ImGuiCol_ChildBg, SleepyDoUI::blueColor);
 
     centerNextItem(toDoChildSize.x);
     ImGui::SetCursorPosY(100.0);
-    ImGui::BeginChild("ToDoChild", toDoChildSize, true, ImGuiWindowFlags_None);
+    ImGui::BeginChild("ToDoMenuChild", toDoChildSize, true, ImGuiWindowFlags_None);
+    
+    int childPosY = 10;
 
-    ImGui::TextColored(SleepyDoUI::blueColor, "dsafdsafdassf");
+
+    for (int i{ 0 }; i < 4; i++) 
+    {
+        ImGui::SetCursorPosY(childPosY);
+        SleepyDoUI::renderToDoTasks(std::to_string(i));
+        childPosY += 60;
+    }
+      
+
+
 
     ImGui::EndChild();
     ImGui::PopStyleColor();
@@ -34,6 +46,32 @@ void SleepyDoUI::renderHomeUI()
 
 void SleepyDoUI::renderLoadMoreUI()
 {
+
+}
+
+void SleepyDoUI::renderToDoTasks(std::string id)
+{
+    std::string childId = "ToDoChild-" + id;
+    ImGui::BeginChild(childId.c_str(), ImVec2(334, 50), true, ImGuiWindowFlags_None);
+
+    ImGui::SetCursorPosY(16);
+    ImGui::SetWindowFontScale(1.3f);
+    ImGui::TextColored(SleepyDoUI::blackColor, "dsafdsafdassf");
+    ImGui::SetWindowFontScale(1.0f);
+    ImGui::SameLine();
+    ImGui::SetCursorPosX(290);
+    ImGui::SetCursorPosY(10);
+
+    ImGui::PushStyleColor(ImGuiCol_Text, SleepyDoUI::blackColor);
+    std::string buttonId = "V-" + id;
+    if (ImGui::Button(buttonId.c_str(), ImVec2(40, 30)))
+    {
+
+    }
+
+    ImGui::PopStyleColor();
+    ImGui::EndChild();
+
 
 }
 

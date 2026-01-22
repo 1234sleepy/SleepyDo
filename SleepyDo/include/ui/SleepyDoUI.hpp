@@ -28,6 +28,7 @@ private:
 	static UIType currentUI;
 
 	static ImVec4 blueColor;
+	static ImVec4 blackColor;
 
 	static const int kUIWidth{ 400 };
 	static const int kUIHeight{ 600 };
@@ -38,8 +39,11 @@ private:
 	static std::string phraseOfTheDay;
 
 	static void renderHeaderUI();
+
 	static void renderHomeUI();
 	static void renderLoadMoreUI();
+
+	static void renderToDoTasks(std::string id);
 
 	static const ImGuiWindowFlags kUIWindowsFlags{ ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoTitleBar };
 };
