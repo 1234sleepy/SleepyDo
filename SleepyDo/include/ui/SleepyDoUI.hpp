@@ -4,6 +4,8 @@
 
 #include "../../vendor/imguI/imgui.h"
 
+#include "../../vendor/imguI/misc/cpp/imgui_stdlib.h"
+
 
 #include <iostream>
 #include <filesystem>
@@ -38,12 +40,16 @@ private:
 
 	static std::string phraseOfTheDay;
 
+	static std::string toDoTaskText;
+
 	static void renderHeaderUI();
 
 	static void renderHomeUI();
 	static void renderLoadMoreUI();
 
 	static void renderToDoTasks(std::string id);
+
+	static void renderAddToDoTasks();
 
 	static const ImGuiWindowFlags kUIWindowsFlags{ ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoTitleBar };
 };

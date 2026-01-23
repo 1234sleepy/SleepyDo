@@ -2,6 +2,7 @@
 
 SleepyDoUI::UIType SleepyDoUI::currentUI{ UIType::HOMEUI };
 std::string SleepyDoUI::phraseOfTheDay{ "Loading..." };
+std::string SleepyDoUI::toDoTaskText{ "" };
 
 ImVec4 SleepyDoUI::blueColor{ ImColor(164, 238, 255, 255) };
 ImVec4 SleepyDoUI::blackColor{ ImColor(0, 0, 0, 255) };
@@ -26,8 +27,7 @@ void SleepyDoUI::renderHomeUI()
     ImGui::SetCursorPosY(100.0);
     ImGui::BeginChild("ToDoMenuChild", toDoChildSize, true, ImGuiWindowFlags_None);
     
-    int childPosY = 10;
-
+    int childPosY{ 10 };
 
     for (int i{ 0 }; i < 4; i++) 
     {
@@ -35,14 +35,43 @@ void SleepyDoUI::renderHomeUI()
         SleepyDoUI::renderToDoTasks(std::to_string(i));
         childPosY += 60;
     }
-      
-
-
 
     ImGui::EndChild();
     ImGui::PopStyleColor();
 
+    SleepyDoUI::renderAddToDoTasks();
+
 }
+
+void SleepyDoUI::renderAddToDoTasks()
+{
+    ImVec2 addToDoTasksChild{ ImVec2(350, 50) };
+    centerNextItem(addToDoTasksChild.x);
+    ImGui::SetCursorPosY(375);
+
+
+    ImGui::BeginChild("AddToDoTasksChild", addToDoTasksChild, true, ImGuiWindowFlags_None);
+
+
+    ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(4, 9));
+    ImGui::SetWindowFontScale(1.1f);
+    ImGui::InputText("##ToDoTaskText", &SleepyDoUI::toDoTaskText, ImGuiInputTextFlags_None);
+    ImGui::SetWindowFontScale(1.0f);
+    ImGui::PopStyleVar();
+
+    ImGui::SetCursorPosX(310);
+    ImGui::SetCursorPosY(10);
+    if (ImGui::Button("+", ImVec2(30, 30)))
+    {
+        //Do something
+
+        SleepyDoUI::toDoTaskText.clear();
+    }
+
+
+    ImGui::EndChild();
+}
+
 
 void SleepyDoUI::renderLoadMoreUI()
 {
@@ -51,7 +80,7 @@ void SleepyDoUI::renderLoadMoreUI()
 
 void SleepyDoUI::renderToDoTasks(std::string id)
 {
-    std::string childId = "ToDoChild-" + id;
+    std::string childId{ "ToDoChild-" + id };
     ImGui::BeginChild(childId.c_str(), ImVec2(334, 50), true, ImGuiWindowFlags_None);
 
     ImGui::SetCursorPosY(16);
@@ -63,7 +92,7 @@ void SleepyDoUI::renderToDoTasks(std::string id)
     ImGui::SetCursorPosY(10);
 
     ImGui::PushStyleColor(ImGuiCol_Text, SleepyDoUI::blackColor);
-    std::string buttonId = "V-" + id;
+    std::string buttonId{ "V-" + id };
     if (ImGui::Button(buttonId.c_str(), ImVec2(40, 30)))
     {
 
@@ -71,9 +100,8 @@ void SleepyDoUI::renderToDoTasks(std::string id)
 
     ImGui::PopStyleColor();
     ImGui::EndChild();
-
-
 }
+
 
 void SleepyDoUI::renderAppUI()
 {
@@ -108,7 +136,7 @@ void SleepyDoUI::renderHeaderUI()
         ImGui::TableSetupColumn("Imp", ImGuiTableColumnFlags_WidthFixed, 65.0f);
         ImGui::TableSetupColumn("Exp", ImGuiTableColumnFlags_WidthFixed, 65.0f);
 
-        const float rowHeight = 22.0f;
+        const float rowHeight{ 22.0f };
 
         ImGui::TableNextRow(ImGuiTableRowFlags_None, rowHeight);
 
