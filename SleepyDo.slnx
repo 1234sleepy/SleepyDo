@@ -3,5 +3,8 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
+  <Folder Name="/SolutionFolder/">
+    <File Path="docker-compose.yml" />
+  </Folder>
   <Project Path="SleepyDo/SleepyDo.vcxproj" Id="8a39ff26-7581-42c3-a177-77cf8985fcb0" />
 </Solution>

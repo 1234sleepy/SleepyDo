@@ -1,0 +1,20 @@
+name: "SleepyDo"
+
+networks:
+  default:
+   name: "sleepy-do"
+
+volumes:
+ sleepydo-db:
+
+services:
+  postgres:
+    container_name: "sleepydo-db"
+    image: "postrgres:latest"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: "postgrespw"
+    volumes:
+      - sleepydo-db:/var/lib/postgresql/
+  
