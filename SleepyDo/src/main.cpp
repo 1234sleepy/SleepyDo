@@ -17,7 +17,7 @@
 
 #include <iostream>
 
-#include "../include/ui/SleepyDoUI.hpp"
+#include "../include/ui/SleepyDoUI.h"
 
 
 #ifdef _DEBUG

@@ -9,12 +9,14 @@ volumes:
 
 services:
   postgres:
-    container_name: "sleepydo-db"
-    image: "postrgres:latest"
+    container_name: sleepydo-db
+    image: postgres:latest
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_PASSWORD: "postgrespw"
+      POSTGRES_PASSWORD: postgrespw
     volumes:
-      - sleepydo-db:/var/lib/postgresql/
+      - sleepydo-db:/var/lib/postgresql/data
+
+  
   

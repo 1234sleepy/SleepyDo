@@ -1,27 +1,32 @@
-#include "../../include/ui/SleepyDoUI.hpp"
+#include "../../include/ui/SleepyDoUI.h"
 
-SleepyDoUI::UIType SleepyDoUI::currentUI{ UIType::HOMEUI };
-std::string SleepyDoUI::phraseOfTheDay{ "Loading..." };
-std::string SleepyDoUI::toDoTaskText{ "" };
+#include "../../vendor/imguI/imgui.h"
 
-ImVec4 SleepyDoUI::blueColor{ ImColor(164, 238, 255, 255) };
-ImVec4 SleepyDoUI::blackColor{ ImColor(0, 0, 0, 255) };
+#include "../../vendor/imguI/misc/cpp/imgui_stdlib.h"
 
+#include <iostream>
+#include <filesystem>
 
+SleepyDoUI::UIType SleepyDoUI::_currentUI{ UIType::HOMEUI };
+std::string SleepyDoUI::_phraseOfTheDay{ "Loading..." };
+std::string SleepyDoUI::_toDoTaskText{ "" };
+
+ImVec4 SleepyDoUI::_blueColor{ ImColor(164, 238, 255, 255) };
+ImVec4 SleepyDoUI::_blackColor{ ImColor(0, 0, 0, 255) };
 
 void SleepyDoUI::renderHomeUI()
 {
     ImGui::SetWindowFontScale(1.5f);
 
-    centerNextItem(ImGui::CalcTextSize(SleepyDoUI::phraseOfTheDay.c_str()).x);
+    centerNextItem(ImGui::CalcTextSize(SleepyDoUI::_phraseOfTheDay.c_str()).x);
     ImGui::SetCursorPosY(60.0);
 
-    ImGui::TextColored(SleepyDoUI::blueColor, SleepyDoUI::phraseOfTheDay.c_str());
+    ImGui::TextColored(SleepyDoUI::_blueColor, SleepyDoUI::_phraseOfTheDay.c_str());
 
     ImGui::SetWindowFontScale(1.0f);
 
     ImVec2 toDoChildSize = ImVec2(350, 250);
-    ImGui::PushStyleColor(ImGuiCol_ChildBg, SleepyDoUI::blueColor);
+    ImGui::PushStyleColor(ImGuiCol_ChildBg, SleepyDoUI::_blueColor);
 
     centerNextItem(toDoChildSize.x);
     ImGui::SetCursorPosY(100.0);
@@ -55,7 +60,7 @@ void SleepyDoUI::renderAddToDoTasks()
 
     ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(4, 9));
     ImGui::SetWindowFontScale(1.1f);
-    ImGui::InputText("##ToDoTaskText", &SleepyDoUI::toDoTaskText, ImGuiInputTextFlags_None);
+    ImGui::InputText("##ToDoTaskText", &SleepyDoUI::_toDoTaskText, ImGuiInputTextFlags_None);
     ImGui::SetWindowFontScale(1.0f);
     ImGui::PopStyleVar();
 
@@ -65,7 +70,7 @@ void SleepyDoUI::renderAddToDoTasks()
     {
         //Do something
 
-        SleepyDoUI::toDoTaskText.clear();
+        SleepyDoUI::_toDoTaskText.clear();
     }
 
 
@@ -85,13 +90,13 @@ void SleepyDoUI::renderToDoTasks(std::string id)
 
     ImGui::SetCursorPosY(16);
     ImGui::SetWindowFontScale(1.3f);
-    ImGui::TextColored(SleepyDoUI::blackColor, "dsafdsafdassf");
+    ImGui::TextColored(SleepyDoUI::_blackColor, "dsafdsafdassf");
     ImGui::SetWindowFontScale(1.0f);
     ImGui::SameLine();
     ImGui::SetCursorPosX(290);
     ImGui::SetCursorPosY(10);
 
-    ImGui::PushStyleColor(ImGuiCol_Text, SleepyDoUI::blackColor);
+    ImGui::PushStyleColor(ImGuiCol_Text, SleepyDoUI::_blackColor);
     std::string buttonId{ "V-" + id };
     if (ImGui::Button(buttonId.c_str(), ImVec2(40, 30)))
     {
@@ -105,13 +110,13 @@ void SleepyDoUI::renderToDoTasks(std::string id)
 
 void SleepyDoUI::renderAppUI()
 {
-    ImGui::SetNextWindowSize(ImVec2(SleepyDoUI::kUIWidth, SleepyDoUI::kUIHeight));
-    ImGui::SetNextWindowPos(ImVec2(kUIPosX, kUIPosY), ImGuiCond_Once);
+    ImGui::SetNextWindowSize(ImVec2(SleepyDoUI::_kUIWidth, SleepyDoUI::_kUIHeight));
+    ImGui::SetNextWindowPos(ImVec2(_kUIPosX, _kUIPosY), ImGuiCond_Once);
 
-    ImGui::Begin("UI", nullptr, kUIWindowsFlags);
+    ImGui::Begin("UI", nullptr, _kUIWindowsFlags);
     {
         SleepyDoUI::renderHeaderUI();
-        switch (SleepyDoUI::currentUI)
+        switch (SleepyDoUI::_currentUI)
         {
         default:
         case SleepyDoUI::UIType::HOMEUI:
@@ -143,7 +148,7 @@ void SleepyDoUI::renderHeaderUI()
         ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
         ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(0.1f, 0.1f, 0.1f, 0.5f));
         ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.2f, 0.2f, 0.2f, 0.8f));
-        ImGui::PushStyleColor(ImGuiCol_Text, SleepyDoUI::blueColor);
+        ImGui::PushStyleColor(ImGuiCol_Text, SleepyDoUI::_blueColor);
 
         ImVec2 btnSize{ -FLT_MIN, rowHeight };
 
