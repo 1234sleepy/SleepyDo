@@ -1,11 +1,12 @@
-#include "../../include/ui/SleepyDoUI.h"
+
+#include <filesystem>
 
 #include "../../vendor/imguI/imgui.h"
 
 #include "../../vendor/imguI/misc/cpp/imgui_stdlib.h"
 
-#include <iostream>
-#include <filesystem>
+#include "../../include/ui/SleepyDoUI.h"
+
 
 SleepyDoUI::UIType SleepyDoUI::_currentUI{ UIType::HOMEUI };
 std::string SleepyDoUI::_phraseOfTheDay{ "Loading..." };

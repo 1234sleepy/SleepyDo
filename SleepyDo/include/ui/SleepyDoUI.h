@@ -2,6 +2,9 @@
 
 #include "../../include/extensions/UIExtension.h"
 
+#include <iostream>
+#include <string>
+
 class SleepyDoUI
 {
 public:

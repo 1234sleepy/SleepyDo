@@ -9,6 +9,12 @@
 #include "../vendor/imguI/imgui.h"
 #include "../vendor/imguI/backends/imgui_impl_win32.h"
 #include "../vendor/imguI/backends/imgui_impl_dx12.h"
+
+#include "../include/ui/SleepyDoUI.h"
+
+#include "../include/database/DataBase.h"
+
+
 #include <d3d12.h>
 #include <dxgi1_5.h>
 #include <tchar.h>
@@ -17,7 +23,6 @@
 
 #include <iostream>
 
-#include "../include/ui/SleepyDoUI.h"
 
 
 #ifdef _DEBUG
@@ -261,6 +266,9 @@ int WINAPI WinMain(
 
     // Main loop
     bool bDone{ false };
+
+
+    DataBase* db = new DataBase(DbConfig::connectionString);
 
     while (!bDone)
     {
