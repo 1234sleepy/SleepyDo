@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../../include/extensions/UIExtension.h"
+#include "../../include/database/DataBase.h"
 
 #include <iostream>
 #include <string>
@@ -12,12 +13,16 @@ public:
 	~SleepyDoUI() = delete;
 
 	static void renderAppUI();
+
+	static void setDb(DataBase* db);
 private:
 	enum class UIType
 	{
 		HOMEUI = 0,
 		LOADMOREUI = 1,
 	};
+
+	static DataBase* dataBase;
 
 	static UIType _currentUI;
 
@@ -41,7 +46,7 @@ private:
 	static void renderHomeUI();
 	static void renderLoadMoreUI();
 
-	static void renderToDoTasks(std::string id);
+	static void renderToDoTasks(const std::string& title);
 
 	static void renderAddToDoTasks();
 

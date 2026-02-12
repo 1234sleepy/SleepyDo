@@ -12,6 +12,8 @@ SleepyDoUI::UIType SleepyDoUI::_currentUI{ UIType::HOMEUI };
 std::string SleepyDoUI::_phraseOfTheDay{ "Loading..." };
 std::string SleepyDoUI::_toDoTaskText{ "" };
 
+DataBase* SleepyDoUI::dataBase = nullptr;
+
 ImVec4 SleepyDoUI::_blueColor{ ImColor(164, 238, 255, 255) };
 ImVec4 SleepyDoUI::_blackColor{ ImColor(0, 0, 0, 255) };
 
@@ -35,12 +37,12 @@ void SleepyDoUI::renderHomeUI()
     
     int childPosY{ 10 };
 
-    for (int i{ 0 }; i < 4; i++) 
-    {
-        ImGui::SetCursorPosY(childPosY);
-        SleepyDoUI::renderToDoTasks(std::to_string(i));
-        childPosY += 60;
-    }
+    Task t = dataBase->testRun();
+
+    ImGui::SetCursorPosY(childPosY);
+    SleepyDoUI::renderToDoTasks(t.title);
+    childPosY += 60;
+
 
     ImGui::EndChild();
     ImGui::PopStyleColor();
@@ -84,21 +86,21 @@ void SleepyDoUI::renderLoadMoreUI()
 
 }
 
-void SleepyDoUI::renderToDoTasks(std::string id)
+void SleepyDoUI::renderToDoTasks(const std::string& title)
 {
-    std::string childId{ "ToDoChild-" + id };
+    std::string childId{ "ToDoChild-" + title };
     ImGui::BeginChild(childId.c_str(), ImVec2(334, 50), true, ImGuiWindowFlags_None);
 
     ImGui::SetCursorPosY(16);
     ImGui::SetWindowFontScale(1.3f);
-    ImGui::TextColored(SleepyDoUI::_blackColor, "dsafdsafdassf");
+    ImGui::TextColored(SleepyDoUI::_blackColor, title.c_str());
     ImGui::SetWindowFontScale(1.0f);
     ImGui::SameLine();
     ImGui::SetCursorPosX(290);
     ImGui::SetCursorPosY(10);
 
     ImGui::PushStyleColor(ImGuiCol_Text, SleepyDoUI::_blackColor);
-    std::string buttonId{ "V-" + id };
+    std::string buttonId{ "V-" + title };
     if (ImGui::Button(buttonId.c_str(), ImVec2(40, 30)))
     {
 
@@ -111,6 +113,7 @@ void SleepyDoUI::renderToDoTasks(std::string id)
 
 void SleepyDoUI::renderAppUI()
 {
+    
     ImGui::SetNextWindowSize(ImVec2(SleepyDoUI::_kUIWidth, SleepyDoUI::_kUIHeight));
     ImGui::SetNextWindowPos(ImVec2(_kUIPosX, _kUIPosY), ImGuiCond_Once);
 
@@ -130,6 +133,11 @@ void SleepyDoUI::renderAppUI()
 
     }
     ImGui::End();
+}
+
+void SleepyDoUI::setDb(DataBase* db)
+{
+    SleepyDoUI::dataBase = db;
 }
 
 

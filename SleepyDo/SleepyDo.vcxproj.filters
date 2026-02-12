@@ -51,6 +51,9 @@
     <ClInclude Include="include\database\DataBase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\entities\Task.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="vendor\imguI\imgui.cpp">

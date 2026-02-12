@@ -267,8 +267,8 @@ int WINAPI WinMain(
     // Main loop
     bool bDone{ false };
 
-
     DataBase* db = new DataBase(DbConfig::connectionString);
+    SleepyDoUI::setDb(db);
 
     while (!bDone)
     {

@@ -134,6 +134,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\database\DataBase.h" />
+    <ClInclude Include="include\entities\Task.h" />
     <ClInclude Include="include\extensions\UIExtension.h" />
     <ClInclude Include="include\ui\SleepyDoUI.h" />
     <ClInclude Include="vendor\imguI\backends\imgui_impl_dx12.h" />
