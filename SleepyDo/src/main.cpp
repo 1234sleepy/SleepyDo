@@ -270,6 +270,9 @@ int WINAPI WinMain(
     DataBase* db = new DataBase(DbConfig::connectionString);
     SleepyDoUI::setDb(db);
 
+    db->testRun();
+    db->testRun();
+
     while (!bDone)
     {
 

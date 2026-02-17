@@ -12,7 +12,8 @@ SleepyDoUI::UIType SleepyDoUI::_currentUI{ UIType::HOMEUI };
 std::string SleepyDoUI::_phraseOfTheDay{ "Loading..." };
 std::string SleepyDoUI::_toDoTaskText{ "" };
 
-DataBase* SleepyDoUI::dataBase = nullptr;
+DataBase* SleepyDoUI::_dataBase = nullptr;
+std::vector<Task> SleepyDoUI::_tasks;
 
 ImVec4 SleepyDoUI::_blueColor{ ImColor(164, 238, 255, 255) };
 ImVec4 SleepyDoUI::_blackColor{ ImColor(0, 0, 0, 255) };
@@ -37,12 +38,14 @@ void SleepyDoUI::renderHomeUI()
     
     int childPosY{ 10 };
 
-    Task t = dataBase->testRun();
+    
 
-    ImGui::SetCursorPosY(childPosY);
-    SleepyDoUI::renderToDoTasks(t.title);
-    childPosY += 60;
-
+    for (const auto& t : _tasks)
+    {
+        ImGui::SetCursorPosY(childPosY);
+        SleepyDoUI::renderToDoTasks(std::to_string(t.id), t.title);
+        childPosY += 59;
+    }
 
     ImGui::EndChild();
     ImGui::PopStyleColor();
@@ -86,9 +89,9 @@ void SleepyDoUI::renderLoadMoreUI()
 
 }
 
-void SleepyDoUI::renderToDoTasks(const std::string& title)
+void SleepyDoUI::renderToDoTasks(const std::string& id, const std::string& title)
 {
-    std::string childId{ "ToDoChild-" + title };
+    std::string childId{ "ToDoChild-" + id };
     ImGui::BeginChild(childId.c_str(), ImVec2(334, 50), true, ImGuiWindowFlags_None);
 
     ImGui::SetCursorPosY(16);
@@ -100,8 +103,8 @@ void SleepyDoUI::renderToDoTasks(const std::string& title)
     ImGui::SetCursorPosY(10);
 
     ImGui::PushStyleColor(ImGuiCol_Text, SleepyDoUI::_blackColor);
-    std::string buttonId{ "V-" + title };
-    if (ImGui::Button(buttonId.c_str(), ImVec2(40, 30)))
+    std::string buttonId{ "V-" + id };
+    if (ImGui::Button(title.c_str(), ImVec2(40, 30)))
     {
 
     }
@@ -137,7 +140,8 @@ void SleepyDoUI::renderAppUI()
 
 void SleepyDoUI::setDb(DataBase* db)
 {
-    SleepyDoUI::dataBase = db;
+    SleepyDoUI::_dataBase = db;
+    _tasks = _dataBase->getTasks();
 }
 
 

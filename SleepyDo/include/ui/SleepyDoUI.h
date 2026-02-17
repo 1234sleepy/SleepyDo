@@ -22,7 +22,9 @@ private:
 		LOADMOREUI = 1,
 	};
 
-	static DataBase* dataBase;
+	static DataBase* _dataBase;
+
+	static std::vector<Task> _tasks;
 
 	static UIType _currentUI;
 
@@ -46,7 +48,7 @@ private:
 	static void renderHomeUI();
 	static void renderLoadMoreUI();
 
-	static void renderToDoTasks(const std::string& title);
+	static void renderToDoTasks(const std::string& id, const std::string& title);
 
 	static void renderAddToDoTasks();
 

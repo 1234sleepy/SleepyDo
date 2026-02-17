@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <vector>
 #include <string>
 #include <pqxx/pqxx>
 
@@ -32,15 +33,19 @@ public:
 			createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 			expiredAt TIMESTAMP NOT NULL)
 		)");
+		//Add important field as bool
 
 		txn.commit();
 	}
 
+	std::vector<Task> getTasks();
+
 	Task testRun()
 	{
 		pqxx::work txn(getConnectionString());
-
-		pqxx::result r = txn.exec(R"(
+		
+		pqxx::result r = txn.exec
+		(R"(
 			INSERT INTO tasks (title, expiredAt)
 			VALUES ('Finish project', '2026-03-01 12:00:00')
 			RETURNING *
@@ -57,11 +62,16 @@ public:
 	}
 
 
-
 	pqxx::connection& getConnectionString()
 	{
 		return _connectionString;
 	}
+
+	int getOffset() { return _offset; }
+
 private:
+	int _limit = 4;
+	int _offset = 0;
+
 	pqxx::connection _connectionString;
 };
