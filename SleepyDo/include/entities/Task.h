@@ -6,4 +6,5 @@ struct Task
 	std::string title;
 	std::string createdAt;
 	std::string expiredAt;
+	bool isImportant;
 };
