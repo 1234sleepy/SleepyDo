@@ -137,6 +137,7 @@
     <ClInclude Include="include\entities\Task.h" />
     <ClInclude Include="include\extensions\UIExtension.h" />
     <ClInclude Include="include\ui\SleepyDoUI.h" />
+    <ClInclude Include="vendor\imguidatepicker\ImGuiDatePicker.hpp" />
     <ClInclude Include="vendor\imguI\backends\imgui_impl_dx12.h" />
     <ClInclude Include="vendor\imguI\backends\imgui_impl_win32.h" />
     <ClInclude Include="vendor\imguI\imconfig.h" />
@@ -152,6 +153,7 @@
     <ClCompile Include="src\extensions\UIExtension.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ui\SleepyDoUI.cpp" />
+    <ClCompile Include="vendor\imguidatepicker\ImGuiDatePicker.cpp" />
     <ClCompile Include="vendor\imguI\backends\imgui_impl_dx12.cpp" />
     <ClCompile Include="vendor\imguI\backends\imgui_impl_win32.cpp" />
     <ClCompile Include="vendor\imguI\imgui.cpp" />

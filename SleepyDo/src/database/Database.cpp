@@ -52,14 +52,14 @@ bool DataBase::removeTask(int id)
 	return r.affected_rows() > 0;
 }
 
-int DataBase::addTask(const Task& task)
+Task DataBase::addTask(const Task& task)
 {
 	pqxx::work txn(getConnection());
 
 	std::string query = R"(
 		INSERT INTO tasks (title, expiredAt, isImportant)
 		VALUES ($1, $2, $3)
-		RETURNING  id;
+		RETURNING  id, title, createdAt, expiredAt, isImportant;
 	)";
 
 	pqxx::params p;
@@ -72,7 +72,15 @@ int DataBase::addTask(const Task& task)
 
 	txn.commit();
 
-	return r[0]["id"].as<unsigned int>();
+	Task newTask{
+		r[0]["id"].as<unsigned int>(),
+		r[0]["title"].as<std::string>(),
+		r[0]["createdAt"].as<std::string>(),
+		r[0]["expiredAt"].as<std::string>(),
+		r[0]["isImportant"].as<bool>()
+	};
+
+	return newTask;
 }
 
 bool DataBase::setTaskImportantToggle(int id)

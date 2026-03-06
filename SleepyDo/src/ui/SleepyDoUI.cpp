@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <ranges>
 #include <filesystem>
 #include <chrono>
@@ -20,6 +22,7 @@ int SleepyDoUI::_deleteTaskId{ -1 };
 
 ImVec4 SleepyDoUI::_blueColor{ ImColor(164, 238, 255, 255) };
 ImVec4 SleepyDoUI::_blackColor{ ImColor(0, 0, 0, 255) };
+bool SleepyDoUI::isDatePickerOpen{ false };
 
 void SleepyDoUI::renderHomeUI()
 {
@@ -63,7 +66,7 @@ void SleepyDoUI::renderHomeUI()
 
 void SleepyDoUI::renderAddToDoTasks()
 {
-    ImVec2 addToDoTasksChild{ ImVec2(350, 50) };
+    ImVec2 addToDoTasksChild{ ImVec2(350, 80) };
     centerNextItem(addToDoTasksChild.x);
     ImGui::SetCursorPosY(375);
 
@@ -75,27 +78,69 @@ void SleepyDoUI::renderAddToDoTasks()
     ImGui::SetWindowFontScale(1.0f);
     ImGui::PopStyleVar();
 
-    ImGui::SetCursorPosX(310);
+    
+
+    static Task tmp;
+    static std::string time = "";
+
     ImGui::SetCursorPosY(10);
-    if (ImGui::Button("+", ImVec2(30, 30)))
+    ImGui::SetCursorPosX(250);
+
+    if (tmp.isImportant)
     {
-        Task tmp;
-        tmp.title = _toDoTaskText;
-        tmp.expiredAt = "2026-03-01 12:00:00";
-        tmp.isImportant = false;
-
-        int id = _dataBase->addTask(tmp);
-
-        if (id != -1)
-        {
-            tmp.id = id;
-            addTask(tmp);
-            SleepyDoUI::sortTasks();
-        }
-        
-        SleepyDoUI::_toDoTaskText.clear();
+        ImGui::PushStyleColor(ImGuiCol_Text, SleepyDoUI::_blueColor);
+    }
+    else
+    {
+        ImGui::PushStyleColor(ImGuiCol_Text, SleepyDoUI::_blackColor);
     }
 
+    if (ImGui::Button("!", ImVec2(20, 60)))
+    {
+        tmp.isImportant = !tmp.isImportant;
+    }
+    ImGui::PopStyleColor();
+    ImGui::SetCursorPosY(10);
+    ImGui::SetCursorPosX(280);
+
+
+    if (ImGui::BeginPopupModal("errorPopUp", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoTitleBar))
+    {
+        ImGui::Text("Your title is empty");
+        if (ImGui::Button("Close"))
+        {
+            ImGui::CloseCurrentPopup();
+        }
+        ImGui::EndPopup();
+    }
+
+
+
+    if (ImGui::Button("+", ImVec2(60, 60)))
+    {
+        if (_toDoTaskText.size() == 0)
+        {
+            ImGui::OpenPopup("errorPopUp");
+        }
+        else
+        {
+            tmp.title = _toDoTaskText;
+            tmp.expiredAt = time;
+
+            Task task = _dataBase->addTask(tmp);
+
+            if (task.id != -1)
+            {
+                addTask(task);
+                SleepyDoUI::sortTasks();
+            }
+
+            SleepyDoUI::_toDoTaskText.clear();
+            tmp = {};
+        }
+    }
+    ImGui::SetCursorPosY(50);
+    renderDatePicker(time);
 
     ImGui::EndChild();
 }
@@ -144,7 +189,7 @@ void SleepyDoUI::renderToDoTasks(Task& t)
     ImGui::PopStyleColor();
     ImGui::SetCursorPosY(30);
     ImGui::SetWindowFontScale(0.9f);
-    ImGui::TextColored(SleepyDoUI::_blackColor, t.expiredAt.c_str());
+    ImGui::TextColored(SleepyDoUI::_blackColor, t.expiredAt.substr(0, t.expiredAt.find(' ')).c_str());
     ImGui::SetWindowFontScale(1.f);
     ImGui::EndChild();
 }
@@ -174,6 +219,23 @@ void SleepyDoUI::renderAppUI()
     ImGui::End();
 }
 
+void SleepyDoUI::renderDatePicker(std::string& time)
+{
+    static tm t{};
+
+    static bool initialized = false;
+    if (!initialized)
+    {
+        std::time_t now = std::time(nullptr);
+        t = *std::localtime(&now);
+        initialized = true;
+    }
+    ImGui::DatePicker("##Date", t);
+
+    time = ImGui::TimePointToLongString(t);
+    
+}
+
 void SleepyDoUI::renderHeaderUI()
 {
     if (ImGui::BeginTable("MyTable", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_NoPadOuterX))
@@ -190,25 +252,19 @@ void SleepyDoUI::renderHeaderUI()
         ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(0.2f, 0.2f, 0.2f, 0.8f));
         ImGui::PushStyleColor(ImGuiCol_Text, SleepyDoUI::_blueColor);
 
-        ImVec2 btnSize{ -FLT_MIN, rowHeight };
+        ImVec2 textSize{ -FLT_MIN, rowHeight };
 
         ImGui::TableNextColumn();
         ImGui::SetWindowFontScale(1.3f);
         ImGui::AlignTextToFramePadding();
-        if (ImGui::Button("SleepyDo", btnSize))
-        {
-
-        }
+        ImGui::Text("SleepyDo", textSize);
         ImGui::SetWindowFontScale(1.0f);
 
         ImGui::TableNextColumn();
         ImGui::AlignTextToFramePadding();
         auto local = std::chrono::zoned_time{ std::chrono::current_zone(), std::chrono::system_clock::now() };
-        std::string timeStr = std::format("{:%Y-%m-%d %H:%M}", local);
-        if (ImGui::Button(timeStr.c_str(), btnSize))
-        {
-
-        }
+        std::string timeStr = std::format("{:%Y-%m-%d}", local);
+        ImGui::Text(timeStr.c_str(), textSize);
 
         ImGui::PopStyleColor();
         ImGui::PopStyleColor();

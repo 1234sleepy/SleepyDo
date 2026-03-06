@@ -1,10 +1,4 @@
-// Dear ImGui: standalone example application for Windows API + DirectX 12
-
-// Learn about Dear ImGui:
-// - FAQ                  https://dearimgui.com/faq
-// - Getting Started      https://dearimgui.com/getting-started
-// - Documentation        https://dearimgui.com/docs (same as your local docs/ folder).
-// - Introduction, links and more at the top of imgui.cpp
+#define _CRT_SECURE_NO_WARNINGS
 
 #include "../vendor/imguI/imgui.h"
 #include "../vendor/imguI/backends/imgui_impl_win32.h"

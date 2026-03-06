@@ -1,4 +1,8 @@
 #pragma once
+#define _CRT_SECURE_NO_WARNINGS
+#define IMGUI_DATEPICKER_YEAR_MIN 1970
+#define IMGUI_DATEPICKER_YEAR_MAX 3000
+#include "../../vendor/imguidatepicker/ImGuiDatePicker.hpp"
 
 #include "../../include/extensions/UIExtension.h"
 #include "../../include/database/DataBase.h"
@@ -14,7 +18,7 @@ public:
 
 	static void renderAppUI();
 	static void setDb(DataBase* db);
-
+	
 private:
 	enum class UIType
 	{
@@ -39,12 +43,15 @@ private:
 	static const int _kUIPosX{ 0 };
 	static const int _kUIPosY{ 0 };
 
+	static bool isDatePickerOpen;
+
 	static std::string _phraseOfTheSession;
 	static std::string _toDoTaskText;
 	
 	static const ImGuiWindowFlags _kUIWindowsFlags{ ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoTitleBar };
 
 	static void renderHeaderUI();
+	static void renderDatePicker(std::string& time);
 	static void eraseTask(int id);
 	static void addTask(const Task& task);
 	static void renderHomeUI();

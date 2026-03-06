@@ -46,7 +46,7 @@ public:
 	bool removeTask(int id);
 	bool setTaskImportantToggle(int id);
 
-	int addTask(const Task& task);
+	Task addTask(const Task& task);
 
 	pqxx::connection& getConnection()
 	{
