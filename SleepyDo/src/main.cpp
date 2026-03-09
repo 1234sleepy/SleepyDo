@@ -172,8 +172,8 @@ int WINAPI WinMain(
 
         HWND hwnd = ::CreateWindowEx(
             WS_EX_LAYERED,
-            _T("SleepyDo | Made by 1234Sleepy"),   // class name
-            _T("SleepyDo | Made by 1234Sleepy"),   // window title
+            _T("SleepyDo | Made by 1234Sleepy"), 
+            _T("SleepyDo | Made by 1234Sleepy"), 
             WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
             x, y,
             windowWidth, windowHeight,
@@ -256,7 +256,6 @@ int WINAPI WinMain(
     // Our state
     bool show_demo_window = true;
     bool show_another_window = false;
-    ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
     // Main loop
     bool bDone{ false };

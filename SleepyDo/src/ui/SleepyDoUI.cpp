@@ -7,6 +7,8 @@
 
 #include "../../vendor/imguI/imgui.h"
 
+#include "../../vendor/imguidatepicker/ImGuiDatePicker.hpp"
+
 #include "../../vendor/imguI/misc/cpp/imgui_stdlib.h"
 
 #include "../../include/ui/SleepyDoUI.h"
@@ -202,7 +204,6 @@ void SleepyDoUI::renderAppUI()
     ImGui::SetNextWindowPos(ImVec2(_kUIPosX, _kUIPosY), ImGuiCond_Once);
 
     ImGui::Begin("UI", nullptr, _kUIWindowsFlags);
-    {
         SleepyDoUI::renderHeaderUI();
         switch (SleepyDoUI::_currentUI)
         {
@@ -214,8 +215,6 @@ void SleepyDoUI::renderAppUI()
             SleepyDoUI::renderLoadMoreUI();
             break;
         }
-
-    }
     ImGui::End();
 }
 
