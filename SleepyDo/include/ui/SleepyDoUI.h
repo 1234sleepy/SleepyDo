@@ -34,6 +34,7 @@ private:
 
 	static ImVec4 _blueColor;
 	static ImVec4 _blackColor;
+	static ImVec4 _redColor;
 
 	static int _deleteTaskId;
 

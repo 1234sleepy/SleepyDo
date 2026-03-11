@@ -11,10 +11,12 @@
 
 #include "../../vendor/imguI/misc/cpp/imgui_stdlib.h"
 
+#include "../../include/extensions/SessionQuote.h"
+
 #include "../../include/ui/SleepyDoUI.h"
 
 SleepyDoUI::UIType SleepyDoUI::_currentUI{ UIType::HOMEUI };
-std::string SleepyDoUI::_phraseOfTheSession{ "Loading..." };
+std::string SleepyDoUI::_phraseOfTheSession{ SessionQuote::getRandomQuote()};
 std::string SleepyDoUI::_toDoTaskText{ "" };
 
 DataBase* SleepyDoUI::_dataBase = nullptr;
@@ -23,6 +25,7 @@ std::vector<Task> SleepyDoUI::_tasks;
 int SleepyDoUI::_deleteTaskId{ -1 };
 
 ImVec4 SleepyDoUI::_blueColor{ ImColor(164, 238, 255, 255) };
+ImVec4 SleepyDoUI::_redColor{ ImColor(255, 0, 0, 255) };
 ImVec4 SleepyDoUI::_blackColor{ ImColor(0, 0, 0, 255) };
 bool SleepyDoUI::isDatePickerOpen{ false };
 
@@ -90,7 +93,7 @@ void SleepyDoUI::renderAddToDoTasks()
 
     if (tmp.isImportant)
     {
-        ImGui::PushStyleColor(ImGuiCol_Text, SleepyDoUI::_blueColor);
+        ImGui::PushStyleColor(ImGuiCol_Text, SleepyDoUI::_redColor);
     }
     else
     {
@@ -162,7 +165,7 @@ void SleepyDoUI::renderToDoTasks(Task& t)
 
     if (t.isImportant)
     {
-        ImGui::PushStyleColor(ImGuiCol_Text, SleepyDoUI::_blueColor);
+        ImGui::PushStyleColor(ImGuiCol_Text, SleepyDoUI::_redColor);
     }
     else
     {

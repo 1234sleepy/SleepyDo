@@ -135,6 +135,7 @@
   <ItemGroup>
     <ClInclude Include="include\database\DataBase.h" />
     <ClInclude Include="include\entities\Task.h" />
+    <ClInclude Include="include\extensions\SessionQuote.h" />
     <ClInclude Include="include\extensions\UIExtension.h" />
     <ClInclude Include="include\ui\SleepyDoUI.h" />
     <ClInclude Include="vendor\imguidatepicker\ImGuiDatePicker.hpp" />
@@ -150,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\database\Database.cpp" />
+    <ClCompile Include="src\extensions\SessionQuote.cpp" />
     <ClCompile Include="src\extensions\UIExtension.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ui\SleepyDoUI.cpp" />
