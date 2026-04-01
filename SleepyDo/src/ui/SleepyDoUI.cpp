@@ -302,7 +302,7 @@ void SleepyDoUI::sortTasks()
             {
                 return a.isImportant > b.isImportant;
             }
-            return a.id > b.id;
+            return a.expiredAt > b.expiredAt;
         });
 }
 
